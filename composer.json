@@ -1,5 +1,5 @@
 {
-    "name": "jovishin/entrust",
+    "name": "zizaco/entrust",
     "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
     "keywords": ["laravel","illuminate","auth","roles","acl","permission"],
     "license": "MIT",
@@ -38,16 +38,16 @@
             "src/commands"
         ],
         "psr-4": {
-            "Jovishin\\Entrust\\": "src/Entrust/"
+            "Zizaco\\Entrust\\": "src/Entrust/"
         }
     },
     "extra":{
         "laravel":{
             "providers":[
-                "Jovishin\\Entrust\\EntrustServiceProvider"
+                "Zizaco\\Entrust\\EntrustServiceProvider"
             ],
             "aliases":{
-                "Entrust": "Jovishin\\Entrust\\EntrustFacade"
+                "Entrust": "Zizaco\\Entrust\\EntrustFacade"
             }
         }
     },
