@@ -7,6 +7,7 @@
  * @license MIT
  * @package Zizaco\Entrust
  */
+
 use Illuminate\Support\Facades\Config;
 
 trait EntrustPermissionTrait
@@ -18,7 +19,7 @@ trait EntrustPermissionTrait
      */
     public function roles()
     {
-        return $this->belongsToMany(Config::get('entrust.role'), Config::get('entrust.permission_role_table'), Config::get('entrust.permission_foreign_key'), Config::get('entrust.role_foreign_key'));
+        return $this->belongsToMany(Config::get('entrust.role'), Config::get('entrust.permission_role_table'));
     }
 
     /**
@@ -31,10 +32,12 @@ trait EntrustPermissionTrait
     public static function boot()
     {
         parent::boot();
-        static::deleting(function ($permission) {
+
+        static::deleting(function($permission) {
             if (!method_exists(Config::get('entrust.permission'), 'bootSoftDeletes')) {
                 $permission->roles()->sync([]);
             }
+
             return true;
         });
     }

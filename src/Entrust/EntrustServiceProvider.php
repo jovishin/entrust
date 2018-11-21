@@ -1,5 +1,4 @@
 <?php namespace Zizaco\Entrust;
-
 /**
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
@@ -7,9 +6,7 @@
  * @license MIT
  * @package Zizaco\Entrust
  */
-
 use Illuminate\Support\ServiceProvider;
-
 class EntrustServiceProvider extends ServiceProvider
 {
     /**
@@ -18,7 +15,6 @@ class EntrustServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
-
     /**
      * Bootstrap the application events.
      *
@@ -30,14 +26,11 @@ class EntrustServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/config.php' => app()->basePath() . '/config/entrust.php',
         ]);
-
         // Register commands
         $this->commands('command.entrust.migration');
-
         // Register blade directives
         $this->bladeDirectives();
     }
-
     /**
      * Register the service provider.
      *
@@ -46,12 +39,9 @@ class EntrustServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerEntrust();
-
         $this->registerCommands();
-
         $this->mergeConfig();
     }
-
     /**
      * Register the blade directives
      *
@@ -60,35 +50,28 @@ class EntrustServiceProvider extends ServiceProvider
     private function bladeDirectives()
     {
         if (!class_exists('\Blade')) return;
-
         // Call to Entrust::hasRole
         \Blade::directive('role', function($expression) {
             return "<?php if (\\Entrust::hasRole({$expression})) : ?>";
         });
-
         \Blade::directive('endrole', function($expression) {
             return "<?php endif; // Entrust::hasRole ?>";
         });
-
         // Call to Entrust::can
         \Blade::directive('permission', function($expression) {
             return "<?php if (\\Entrust::can({$expression})) : ?>";
         });
-
         \Blade::directive('endpermission', function($expression) {
             return "<?php endif; // Entrust::can ?>";
         });
-
         // Call to Entrust::ability
         \Blade::directive('ability', function($expression) {
             return "<?php if (\\Entrust::ability({$expression})) : ?>";
         });
-
         \Blade::directive('endability', function($expression) {
             return "<?php endif; // Entrust::ability ?>";
         });
     }
-
     /**
      * Register the application bindings.
      *
@@ -99,10 +82,8 @@ class EntrustServiceProvider extends ServiceProvider
         $this->app->bind('entrust', function ($app) {
             return new Entrust($app);
         });
-
         $this->app->alias('entrust', 'Zizaco\Entrust\Entrust');
     }
-
     /**
      * Register the artisan commands.
      *
@@ -114,7 +95,6 @@ class EntrustServiceProvider extends ServiceProvider
             return new MigrationCommand();
         });
     }
-
     /**
      * Merges user's and entrust's configs.
      *
@@ -126,7 +106,6 @@ class EntrustServiceProvider extends ServiceProvider
             __DIR__.'/../config/config.php', 'entrust'
         );
     }
-
     /**
      * Get the services provided.
      *
